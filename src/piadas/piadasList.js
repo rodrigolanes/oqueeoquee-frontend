@@ -26,7 +26,9 @@ const styles = theme => ({
       color: blue[800]
     }
   },
-  actions: {}
+  actions: {
+    width: 80
+  }
 });
 
 const PiadasList = props => {
