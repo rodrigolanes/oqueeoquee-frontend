@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { withStyles } from "@material-ui/core/styles";
+import PiadasForm from "./piadasForm";
 import PiadasList from "./piadasList";
 
-// const BASE_URL = "http://localhost:4000/api/v1";
 const BASE_URL = process.env.REACT_APP_BACKEND_URL;
 
 const styles = theme => ({
@@ -22,11 +22,22 @@ class Piadas extends Component {
       pageSize: 0,
       limit: 10,
       pages: 0,
-      total: 0
+      total: 0,
+      piada: {
+        id: "",
+        pergunta: "",
+        resposta: ""
+      }
     };
 
     this.handleChangePage = this.handleChangePage.bind(this);
     this.handleChangeRowsPerPage = this.handleChangeRowsPerPage.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleEdit = this.handleEdit.bind(this);
+    this.handleSave = this.handleSave.bind(this);
+
+    this.handleDelete = this.handleDelete.bind(this);
+    this.handleClear = this.handleClear.bind(this);
 
     this.refresh();
   }
@@ -54,16 +65,87 @@ class Piadas extends Component {
     this.refresh(1, +limit);
   }
 
+  handleChange = name => event => {
+    const novaPiada = { ...this.state.piada, [name]: event.target.value };
+    this.setState({ ...this.state, piada: novaPiada });
+  };
+
+  handleEdit(piada) {
+    this.setState({
+      ...this.state,
+      piada: {
+        id: piada._id,
+        pergunta: piada.pergunta,
+        resposta: piada.resposta
+      }
+    });
+  }
+
+  handleAdd = () => {
+    const { pergunta, resposta } = this.state.piada;
+    axios
+      .post(`${BASE_URL}/piadas`, {
+        pergunta,
+        resposta
+      })
+      .then(result => this.handleClear());
+  };
+
+  handleUpdate = () => {
+    const { id, pergunta, resposta } = this.state.piada;
+    axios
+      .put(`${BASE_URL}/piadas/${id}`, {
+        pergunta,
+        resposta
+      })
+      .then(result => this.handleClear());
+  };
+
+  handleSave = () => {
+    if (this.state.piada.id) {
+      this.handleUpdate();
+    } else {
+      this.handleAdd();
+    }
+  };
+
+  handleDelete = id => {
+    axios.delete(`${BASE_URL}/piadas/${id}`).then(result => this.refresh());
+  };
+
+  handleClear = () => {
+    this.setState({
+      ...this.state,
+      piada: {
+        id: "",
+        pergunta: "",
+        resposta: ""
+      }
+    });
+    this.refresh();
+  };
+
   render() {
     return (
-      <PiadasList
-        rows={this.state.items}
-        rowsPerPage={this.state.limit}
-        page={this.state.currentPage}
-        total={this.state.total}
-        handleChangePage={this.handleChangePage}
-        handleChangeRowsPerPage={this.handleChangeRowsPerPage}
-      />
+      <>
+        <PiadasForm
+          pergunta={this.state.piada.pergunta}
+          resposta={this.state.piada.resposta}
+          handleChange={this.handleChange}
+          handleSave={this.handleSave}
+          handleClear={this.handleClear}
+        />
+        <PiadasList
+          rows={this.state.items}
+          rowsPerPage={this.state.limit}
+          page={this.state.currentPage}
+          total={this.state.total}
+          handleChangePage={this.handleChangePage}
+          handleChangeRowsPerPage={this.handleChangeRowsPerPage}
+          handleEdit={this.handleEdit}
+          handleDelete={this.handleDelete}
+        />
+      </>
     );
   }
 }

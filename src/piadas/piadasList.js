@@ -8,6 +8,9 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import TableFooter from "@material-ui/core/TableFooter";
 import TablePagination from "@material-ui/core/TablePagination";
+import Icon from "@material-ui/core/Icon";
+import IconButton from "@material-ui/core/IconButton";
+import blue from "@material-ui/core/colors/blue";
 import "moment/locale/pt-br";
 
 import TablePaginationActions from "../commons/tablePaginationActions";
@@ -22,11 +25,28 @@ const styles = theme => ({
   },
   tableWrapper: {
     overflowX: "auto"
+  },
+  icon: {
+    fontSize: 14,
+    "&:hover": {
+      color: blue[800]
+    }
+  },
+  actions: {
+    width: 80
   }
 });
 
 const PiadasList = props => {
-  const { classes, rows, rowsPerPage, page, total } = props;
+  const {
+    classes,
+    rows,
+    rowsPerPage,
+    page,
+    total,
+    handleEdit,
+    handleDelete
+  } = props;
 
   const renderRows = () => {
     const list = rows || [];
@@ -45,7 +65,14 @@ const PiadasList = props => {
             {piada.updatedAt}
           </Moment>
         </TableCell>
-        <TableCell />
+        <TableCell className={classes.actions}>
+          <IconButton onClick={() => handleEdit(piada)}>
+            <Icon className={classes.icon}>edit</Icon>
+          </IconButton>
+          <IconButton onClick={() => handleDelete(piada._id)}>
+            <Icon className={classes.icon}>delete</Icon>
+          </IconButton>
+        </TableCell>
       </TableRow>
     ));
   };
