@@ -20,21 +20,13 @@ const styles = theme => ({
     width: "100%",
     marginTop: theme.spacing.unit * 3
   },
-  table: {
-    minWidth: 500
-  },
-  tableWrapper: {
-    overflowX: "auto"
-  },
   icon: {
     fontSize: 14,
     "&:hover": {
       color: blue[800]
     }
   },
-  actions: {
-    width: 80
-  }
+  actions: {}
 });
 
 const PiadasList = props => {

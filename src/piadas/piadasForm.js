@@ -17,7 +17,8 @@ const styles = theme => ({
   },
   item: {
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    paddingLeft: "10px"
   },
   textField: {
     marginLeft: theme.spacing.unit,
@@ -30,7 +31,7 @@ const piadasForm = props => {
   const { classes } = props;
   return (
     <form noValidate autoComplete="off">
-      <Grid container className={classes.container} spacing={24}>
+      <Grid container className={classes.container}>
         <Grid item className={classes.item} xs={12} sm={6} md={4} lg={4}>
           <TextField
             id="standard-name"
