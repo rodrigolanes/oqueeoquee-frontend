@@ -3,8 +3,7 @@ import axios from "axios";
 import { withStyles } from "@material-ui/core/styles";
 import PiadasForm from "./piadasForm";
 import PiadasList from "./piadasList";
-
-const BASE_URL = process.env.REACT_APP_BACKEND_URL;
+import consts from "../commons/constants";
 
 const styles = theme => ({
   table: {
@@ -52,7 +51,7 @@ class Piadas extends Component {
     }
 
     axios
-      .get(`${BASE_URL}/piadas?page=${page}&limit=${limit}`)
+      .get(`${consts.BASE_URL}/piadas?page=${page}&limit=${limit}`)
       .then(result => this.setState({ ...this.state, ...result.data }));
   }
 
@@ -84,7 +83,7 @@ class Piadas extends Component {
   handleAdd = () => {
     const { pergunta, resposta } = this.state.piada;
     axios
-      .post(`${BASE_URL}/piadas`, {
+      .post(`${consts.BASE_URL}/piadas`, {
         pergunta,
         resposta
       })
@@ -94,7 +93,7 @@ class Piadas extends Component {
   handleUpdate = () => {
     const { id, pergunta, resposta } = this.state.piada;
     axios
-      .put(`${BASE_URL}/piadas/${id}`, {
+      .put(`${consts.BASE_URL}/piadas/${id}`, {
         pergunta,
         resposta
       })
@@ -110,7 +109,9 @@ class Piadas extends Component {
   };
 
   handleDelete = id => {
-    axios.delete(`${BASE_URL}/piadas/${id}`).then(result => this.refresh());
+    axios
+      .delete(`${consts.BASE_URL}/piadas/${id}`)
+      .then(result => this.refresh());
   };
 
   handleClear = () => {
