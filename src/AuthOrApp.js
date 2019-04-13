@@ -9,11 +9,11 @@ class AuthOrApp extends Component {
   constructor(props) {
     super(props);
     this.userStorage = JSON.parse(localStorage.getItem(consts.USER_KEY));
-    this.state = { showLogin: true };
+    this.state = { showComponent: "" };
   }
 
   componentWillMount() {
-    if (!this.userStorage) return <Login />;
+    if (!this.userStorage) this.setState({ showComponent: "login" });
     else {
       const { token } = this.userStorage;
 
@@ -22,9 +22,10 @@ class AuthOrApp extends Component {
         .then(resp => {
           if (!resp.data.valid) {
             localStorage.removeItem(consts.USER_KEY);
+            this.setState({ showComponent: "login" });
           } else {
             axios.defaults.headers.common["authorization"] = token;
-            this.setState({ showLogin: false });
+            this.setState({ showComponent: "app" });
           }
         })
         .catch(e => {
@@ -34,7 +35,14 @@ class AuthOrApp extends Component {
   }
 
   render() {
-    return this.state.showLogin === true ? <Login /> : <App />;
+    switch (this.state.showComponent) {
+      case "login":
+        return <Login />;
+      case "app":
+        return <App />;
+      default:
+        return null;
+    }
   }
 }
 
