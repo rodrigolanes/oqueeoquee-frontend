@@ -1,5 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import AuthOrApp from "./AuthOrApp";
+import App from "./App";
 
-ReactDOM.render(<AuthOrApp />, document.getElementById("root"));
+ReactDOM.render(<App />, document.getElementById("root"));

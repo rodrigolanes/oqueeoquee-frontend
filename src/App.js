@@ -1,10 +1,11 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
-import Piadas from "./piadas/piadas";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
+
+import AuthOrApp from "./AuthOrApp";
 
 const styles = theme => ({
   root: {
@@ -29,7 +30,7 @@ const App = props => {
           </Typography>
         </Toolbar>
       </AppBar>
-      <Piadas />
+      <AuthOrApp />
     </Paper>
   );
 };
