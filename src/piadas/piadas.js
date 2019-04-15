@@ -83,10 +83,9 @@ class Piadas extends Component {
   handleSearch = () => {
     const { pergunta, resposta } = this.state.piada;
     axios
-      .get(`${consts.BASE_URL}/piadas`, {
-        pergunta,
-        resposta
-      })
+      .get(
+        `${consts.BASE_URL}/piadas?pergunta=${pergunta}&resposta=${resposta}`
+      )
       .then(result => this.setState({ ...this.state, ...result.data }));
   };
 
