@@ -9,14 +9,16 @@ class AuthOrApp extends Component {
   constructor(props) {
     super(props);
     this.userStorage = JSON.parse(localStorage.getItem(consts.USER_KEY));
-    this.state = { showComponent: "" };
+    this.state = { showComponent: "", isLoggedIn: false };
 
     this.handleLoginSucess = this.handleLoginSucess.bind(this);
   }
 
   componentWillMount() {
-    if (!this.userStorage) this.setState({ showComponent: "login" });
-    else {
+    if (!this.userStorage) {
+      this.setState({ showComponent: "login" });
+      localStorage.removeItem(consts.USER_KEY);
+    } else {
       const { token } = this.userStorage;
 
       axios
@@ -37,10 +39,16 @@ class AuthOrApp extends Component {
   }
 
   handleLoginSucess() {
+    this.props.handleLogin(true);
     this.setState({ showComponent: "piadas" });
   }
 
   render() {
+    const { isLoggedIn } = this.props;
+
+    if (!isLoggedIn)
+      return <Login handleLoginSucess={this.handleLoginSucess} />;
+
     switch (this.state.showComponent) {
       case "login":
         return <Login handleLoginSucess={this.handleLoginSucess} />;
