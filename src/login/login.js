@@ -68,14 +68,18 @@ class Login extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
+  saveCredentialsAndRedirect(credentials) {
+    localStorage.setItem(consts.USER_KEY, JSON.stringify(credentials));
+    axios.defaults.headers.common["authorization"] = credentials.token;
+    this.props.handleLoginSucess();
+  }
+
   responseGoogleSucess = response => {
     const { tokenId } = response;
     axios
       .post(`${consts.BASE_URL}/users/googleLogin`, { token: tokenId })
       .then(resp => {
-        localStorage.setItem(consts.USER_KEY, JSON.stringify(resp.data));
-        axios.defaults.headers.common["authorization"] = resp.data.token;
-        this.props.handleLoginSucess();
+        this.saveCredentialsAndRedirect(resp.data);
       })
       .catch(e => {
         console.log(e);
@@ -92,9 +96,7 @@ class Login extends Component {
     axios
       .post(`${consts.BASE_URL}/users/facebookLogin`, { token: accessToken })
       .then(resp => {
-        localStorage.setItem(consts.USER_KEY, JSON.stringify(resp.data));
-        axios.defaults.headers.common["authorization"] = resp.data.token;
-        this.props.handleLoginSucess();
+        this.saveCredentialsAndRedirect(resp.data);
       })
       .catch(e => {
         console.log(e);
@@ -116,9 +118,7 @@ class Login extends Component {
     axios
       .post(`${consts.BASE_URL}/users/login`, this.state)
       .then(resp => {
-        localStorage.setItem(consts.USER_KEY, JSON.stringify(resp.data));
-        axios.defaults.headers.common["authorization"] = resp.data.token;
-        this.props.handleLoginSucess();
+        this.saveCredentialsAndRedirect(resp.data);
       })
       .catch(e => {
         console.log(e);

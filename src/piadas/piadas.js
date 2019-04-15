@@ -80,6 +80,16 @@ class Piadas extends Component {
     });
   }
 
+  handleSearch = () => {
+    const { pergunta, resposta } = this.state.piada;
+    axios
+      .get(`${consts.BASE_URL}/piadas`, {
+        pergunta,
+        resposta
+      })
+      .then(result => this.setState({ ...this.state, ...result.data }));
+  };
+
   handleAdd = () => {
     const { pergunta, resposta } = this.state.piada;
     axios
@@ -135,6 +145,7 @@ class Piadas extends Component {
           handleChange={this.handleChange}
           handleSave={this.handleSave}
           handleClear={this.handleClear}
+          handleSearch={this.handleSearch}
         />
         <PiadasList
           rows={this.state.items}

@@ -65,6 +65,7 @@ const piadasForm = props => {
             variant="contained"
             color="primary"
             className={classes.button}
+            onClick={props.handleSearch}
           >
             Buscar
           </Button>
