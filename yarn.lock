@@ -9743,10 +9743,10 @@ react-facebook-login@^4.1.1:
   resolved "https://registry.yarnpkg.com/react-facebook-login/-/react-facebook-login-4.1.1.tgz#005121236a6ac0dee02099976fb1a3265f9d633e"
   integrity sha512-COnHEHlYGTKipz4963safFAK9PaNTcCiXfPXMS/yxo8El+/AJL5ye8kMJf23lKSSGGPgqFQuInskIHVqGqTvSw==
 
-react-google-login@^5.1.16:
-  version "5.1.16"
-  resolved "https://registry.yarnpkg.com/react-google-login/-/react-google-login-5.1.16.tgz#4e57b89485468871485ee394bb7a0ce4e5a83ce4"
-  integrity sha512-Ar7vS6bs2ObvtmTM0w9/CEmGqKQ0UqFW47V9FslcxFBEZlsr5fkCWsbbVFc2ZwzA0skCnjCEXTkbsu7hqUXrOg==
+react-google-login@^5.1.18:
+  version "5.1.18"
+  resolved "https://registry.yarnpkg.com/react-google-login/-/react-google-login-5.1.18.tgz#0e6153dd789cbca8240204c2c3582d34f9a09842"
+  integrity sha512-BIwtI0HmGQl9Ze1KX3cuGj5a9nYyg408U7ZHK8ZCCBStXYnmYYkQVIxR6+Y6+TA7LqutTxtH8zeEB1PkdL5HCg==
   dependencies:
     "@types/react" "*"
     prop-types "^15.6.0"
